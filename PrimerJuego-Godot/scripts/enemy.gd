@@ -5,8 +5,8 @@ extends RigidBody2D
 func _ready():
 	randomize()
 	var animations = $AnimatedSprite2D.sprite_frames.get_animation_names()
+	# ["Animacion1", "Animacion2", "Animacion3"]
 	$AnimatedSprite2D.play(animations[randi() % animations.size()])
-	print(animations.size())
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

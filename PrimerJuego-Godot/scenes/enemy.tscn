@@ -49,6 +49,8 @@ radius = 26.0
 height = 64.0
 
 [node name="enemy" type="RigidBody2D"]
+scale = Vector2(0.75, 0.75)
+collision_mask = 0
 gravity_scale = 0.0
 script = ExtResource("1_72hmx")
 metadata/_edit_group_ = true
@@ -56,8 +58,7 @@ metadata/_edit_group_ = true
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_b85lr")
-animation = &"walking"
-frame_progress = 0.159697
+animation = &"swimming"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
