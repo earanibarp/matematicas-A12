@@ -8,7 +8,7 @@ func _ready():
 
 func _on_score_timer_timeout():
 	score += 1 #score = score + 1
-
+	$HUD.update_score(score)
 
 func _on_player_hit():
 	game_over()
@@ -16,11 +16,18 @@ func _on_player_hit():
 func game_over():
 	$EnemyTimer.stop()
 	$ScoreTimer.stop()
+	$HUD.show_game_over()
+	$MusicGameOver.play()
+	$Music.stop()
 
 func new_game():
 	score = 0
 	$player.start($StartPosition.position)
 	$StartTimer.start()
+	$HUD.update_score(score)
+	$HUD.show_message("Prepárate...")
+	$Music.play()
+	get_tree().call_group("enemy", "queue_free")
 
 func _on_enemy_timer_timeout():
 	var enemy = enemy_scene.instantiate()
@@ -42,3 +49,7 @@ func _on_enemy_timer_timeout():
 func _on_start_timer_timeout():
 	$EnemyTimer.start()
 	$ScoreTimer.start()
+
+
+func _on_hud_start_game():
+	new_game()
