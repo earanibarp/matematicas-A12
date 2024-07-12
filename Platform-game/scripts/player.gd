@@ -7,6 +7,8 @@ class_name Player
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+func _ready():
+	GameManager.player = self
 
 func _physics_process(delta):
 	if not is_on_floor():
@@ -23,9 +25,13 @@ func _physics_process(delta):
 		velocity.x = direction * speed
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
-
+		
+	if position.y >= 720:
+		die()
+	
 	move_and_slide()
 	process_animations()
+	
 	
 
 func process_animations():
@@ -45,3 +51,6 @@ func process_animations():
 		$AnimationPlayer.play("fall")
 	
 	#print($AnimationPlayer.current_animation)
+
+func die():
+	GameManager.respawn_player()

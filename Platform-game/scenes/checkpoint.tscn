@@ -40,7 +40,7 @@ _data = {
 script = ExtResource("1_uqmuh")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("5_drwol")
+texture = ExtResource("1_tfe86")
 
 [node name="Area2D" type="Area2D" parent="."]
 monitorable = false
