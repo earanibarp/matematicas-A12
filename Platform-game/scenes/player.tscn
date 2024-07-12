@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bg83xeo55rabc"]
+[gd_scene load_steps=24 format=3 uid="uid://bg83xeo55rabc"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_3atv6"]
 [ext_resource type="Texture2D" uid="uid://dvsms2fahu0nv" path="res://Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose with Sword/10-Run Sword/Run Sword 02.png" id="1_s2pf5"]
@@ -94,6 +94,10 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d0ibs"]
 size = Vector2(18.5, 25)
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6s0ty"]
+radius = 7.0
+height = 20.0
+
 [node name="player" type="CharacterBody2D"]
 script = ExtResource("1_3atv6")
 metadata/_edit_group_ = true
@@ -113,3 +117,9 @@ shape = SubResource("RectangleShape2D_d0ibs")
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(-50, 0)
 limit_left = -100
+
+[node name="Area2D" type="Area2D" parent="."]
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CapsuleShape2D_6s0ty")
