@@ -3,6 +3,7 @@ class_name Player
 
 @export var speed = 300.0
 @export var jump_velocity = -400.0
+@export var attacking = false
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -32,23 +33,40 @@ func _physics_process(delta):
 	move_and_slide()
 	process_animations()
 	
+func _process(delta):
+	if Input.is_action_just_pressed("attack"):
+		attack()
+
+func attack():
+	attacking = true
+	$AnimationPlayer.play("attack")
 	
+	var overlapping_areas = $AtackingArea.get_overlapping_areas()
+	
+	for area in overlapping_areas:
+		print(area)
+		if area.is_in_group("enemies"):
+			area.get_parent().die()
+		
 
 func process_animations():
-	if velocity.x != 0:
-		$AnimationPlayer.play("run")
-		if velocity.x < 0:
-			$Sprite2D.flip_h = true
+	if !attacking:
+		if velocity.x != 0:
+			$AnimationPlayer.play("run")
+			if velocity.x < 0:
+				$Sprite2D.flip_h = true
+			else:
+				$Sprite2D.flip_h = false
 		else:
-			$Sprite2D.flip_h = false
+			$AnimationPlayer.play("idle")
+	
+		if velocity.y < 0:
+			$AnimationPlayer.play("jump")
+	
+		if velocity.y > 0:
+			$AnimationPlayer.play("fall")
 	else:
-		$AnimationPlayer.play("idle")
-	
-	if velocity.y < 0:
-		$AnimationPlayer.play("jump")
-	
-	if velocity.y > 0:
-		$AnimationPlayer.play("fall")
+		attacking = false
 	
 	#print($AnimationPlayer.current_animation)
 

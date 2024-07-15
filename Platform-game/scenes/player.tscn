@@ -1,8 +1,9 @@
-[gd_scene load_steps=24 format=3 uid="uid://bg83xeo55rabc"]
+[gd_scene load_steps=29 format=3 uid="uid://bg83xeo55rabc"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_3atv6"]
 [ext_resource type="Texture2D" uid="uid://dvsms2fahu0nv" path="res://Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose with Sword/10-Run Sword/Run Sword 02.png" id="1_s2pf5"]
 [ext_resource type="Texture2D" uid="uid://cevtm3r4p88me" path="res://Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose with Sword/09-Idle Sword/Idle Sword 01.png" id="2_57pxe"]
+[ext_resource type="Texture2D" uid="uid://874voauysgt2" path="res://Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose with Sword/15-Attack 1/Attack 1 03.png" id="2_gda20"]
 [ext_resource type="Texture2D" uid="uid://duilm74w3mp5j" path="res://Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose with Sword/09-Idle Sword/Idle Sword 02.png" id="3_hkpmf"]
 [ext_resource type="Texture2D" uid="uid://dl1x2neren034" path="res://Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose with Sword/09-Idle Sword/Idle Sword 03.png" id="4_pcwit"]
 [ext_resource type="Texture2D" uid="uid://bjhfohwb6bflm" path="res://Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose with Sword/09-Idle Sword/Idle Sword 04.png" id="5_i0ccf"]
@@ -16,6 +17,8 @@
 [ext_resource type="Texture2D" uid="uid://chglfiix1d1f6" path="res://Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose with Sword/10-Run Sword/Run Sword 05.png" id="13_crjta"]
 [ext_resource type="Texture2D" uid="uid://d264ohhv4gk47" path="res://Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose with Sword/10-Run Sword/Run Sword 06.png" id="14_fmvl3"]
 [ext_resource type="Texture2D" uid="uid://bvkyuvlnvf2j0" path="res://Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose with Sword/12-Fall Sword/Fall Sword 01.png" id="16_6wx4m"]
+[ext_resource type="Texture2D" uid="uid://duqmxuwxwj5wc" path="res://Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose with Sword/15-Attack 1/Attack 1 01.png" id="18_cnj8r"]
+[ext_resource type="Texture2D" uid="uid://do7r5insnbxpo" path="res://Treasure Hunters/Captain Clown Nose/Sprites/Captain Clown Nose/Captain Clown Nose with Sword/15-Attack 1/Attack 1 02.png" id="19_5b02n"]
 
 [sub_resource type="Animation" id="Animation_omrc0"]
 resource_name = "fall"
@@ -83,8 +86,26 @@ tracks/0/keys = {
 "values": [ExtResource("10_d2imj"), ExtResource("1_s2pf5"), ExtResource("11_6o3am"), ExtResource("12_ho5ou"), ExtResource("13_crjta"), ExtResource("14_fmvl3")]
 }
 
+[sub_resource type="Animation" id="Animation_0yhnp"]
+resource_name = "attack"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("18_cnj8r"), ExtResource("19_5b02n"), ExtResource("2_gda20")]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wcol7"]
 _data = {
+"attack": SubResource("Animation_0yhnp"),
 "fall": SubResource("Animation_omrc0"),
 "idle": SubResource("Animation_gugp1"),
 "jump": SubResource("Animation_h1ul5"),
@@ -98,12 +119,15 @@ size = Vector2(18.5, 25)
 radius = 7.0
 height = 20.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_yqn4v"]
+radius = 7.0
+
 [node name="player" type="CharacterBody2D"]
+collision_layer = 2
 script = ExtResource("1_3atv6")
-metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_57pxe")
+texture = ExtResource("2_gda20")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -123,3 +147,10 @@ monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CapsuleShape2D_6s0ty")
+
+[node name="AtackingArea" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AtackingArea"]
+position = Vector2(18, 3)
+shape = SubResource("CircleShape2D_yqn4v")
