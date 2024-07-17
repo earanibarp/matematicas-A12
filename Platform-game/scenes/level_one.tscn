@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cojfdmjp23iom"]
+[gd_scene load_steps=18 format=3 uid="uid://cojfdmjp23iom"]
 
 [ext_resource type="Texture2D" uid="uid://ct3xoqdvvfd50" path="res://Treasure Hunters/Palm Tree Island/Sprites/Background/BG Image.png" id="1_5vf85"]
 [ext_resource type="Texture2D" uid="uid://brynf1s74upyo" path="res://Treasure Hunters/Palm Tree Island/Sprites/Terrain/Terrain (32x32).png" id="1_6phkp"]
@@ -11,6 +11,8 @@
 [ext_resource type="Script" path="res://scripts/hud.gd" id="9_3v1d4"]
 [ext_resource type="Texture2D" uid="uid://c7wc0qdb06an0" path="res://Treasure Hunters/Pirate Treasure/Sprites/Gold Coin/01.png" id="10_lj52y"]
 [ext_resource type="PackedScene" uid="uid://c2shak7tp3gj5" path="res://scenes/enemy.tscn" id="11_32ula"]
+[ext_resource type="PackedScene" uid="uid://cgbubxokm1xd8" path="res://scenes/health_up.tscn" id="12_hso3n"]
+[ext_resource type="PackedScene" uid="uid://sb8gm6qnujbw" path="res://scenes/cannon.tscn" id="13_kq3wk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6axax"]
 texture = ExtResource("1_6phkp")
@@ -869,5 +871,11 @@ offset_bottom = 30.0
 texture = ExtResource("10_lj52y")
 
 [node name="enemy" parent="." instance=ExtResource("11_32ula")]
-position = Vector2(328, 323)
+position = Vector2(607, 353)
 metadata/_edit_horizontal_guides_ = [9.0]
+
+[node name="healthUp" parent="." instance=ExtResource("12_hso3n")]
+position = Vector2(921, 342)
+
+[node name="cannon" parent="." instance=ExtResource("13_kq3wk")]
+position = Vector2(1297, 340)

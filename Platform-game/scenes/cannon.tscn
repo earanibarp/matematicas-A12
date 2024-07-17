@@ -1,0 +1,113 @@
+[gd_scene load_steps=18 format=3 uid="uid://sb8gm6qnujbw"]
+
+[ext_resource type="Script" path="res://scripts/cannon.gd" id="1_3d0yb"]
+[ext_resource type="Texture2D" uid="uid://mq4ln42yjybw" path="res://Treasure Hunters/Shooter Traps/Sprites/Cannon/Cannon Hit/4.png" id="1_h807l"]
+[ext_resource type="Texture2D" uid="uid://cltjpfov2y3ii" path="res://Treasure Hunters/Shooter Traps/Sprites/Cannon/Cannon Fire/1.png" id="2_fn0bl"]
+[ext_resource type="Texture2D" uid="uid://iu3rict4u4mf" path="res://Treasure Hunters/Shooter Traps/Sprites/Cannon/Cannon Fire/2.png" id="3_wu63a"]
+[ext_resource type="Texture2D" uid="uid://byxgo30bggoty" path="res://Treasure Hunters/Shooter Traps/Sprites/Cannon/Cannon Fire/3.png" id="4_mgn18"]
+[ext_resource type="Texture2D" uid="uid://bqleqk7i61qp8" path="res://Treasure Hunters/Shooter Traps/Sprites/Cannon/Cannon Fire/4.png" id="5_o1yg0"]
+[ext_resource type="Texture2D" uid="uid://bw12sy46h6js0" path="res://Treasure Hunters/Shooter Traps/Sprites/Cannon/Cannon Fire/5.png" id="6_gkqhj"]
+[ext_resource type="Texture2D" uid="uid://bdfx3wsfrb44l" path="res://Treasure Hunters/Shooter Traps/Sprites/Cannon/Cannon Fire/6.png" id="7_uqhoc"]
+[ext_resource type="Texture2D" uid="uid://bs8i43024blle" path="res://Treasure Hunters/Shooter Traps/Sprites/Cannon/Cannon Hit/1.png" id="8_rvm0h"]
+[ext_resource type="Texture2D" uid="uid://dslwsc6qra32s" path="res://Treasure Hunters/Shooter Traps/Sprites/Cannon/Cannon Hit/2.png" id="9_tgfj1"]
+[ext_resource type="Texture2D" uid="uid://jgki3p71t13f" path="res://Treasure Hunters/Shooter Traps/Sprites/Cannon/Cannon Hit/3.png" id="10_37vcn"]
+[ext_resource type="PackedScene" uid="uid://bpi7g0k4cahac" path="res://scenes/health_bar.tscn" id="12_0vvue"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2vy6m"]
+size = Vector2(20, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_op5fj"]
+size = Vector2(30, 22)
+
+[sub_resource type="Animation" id="Animation_x5nmu"]
+resource_name = "fire"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("2_fn0bl"), ExtResource("3_wu63a"), ExtResource("4_mgn18"), ExtResource("5_o1yg0"), ExtResource("6_gkqhj"), ExtResource("7_uqhoc")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"fire"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_qbgfr"]
+resource_name = "hit"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("8_rvm0h"), ExtResource("9_tgfj1"), ExtResource("10_37vcn"), ExtResource("1_h807l")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:shooting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x8uum"]
+_data = {
+"fire": SubResource("Animation_x5nmu"),
+"hit": SubResource("Animation_qbgfr")
+}
+
+[node name="cannon" type="StaticBody2D" groups=["enemies"]]
+script = ExtResource("1_3d0yb")
+shooting = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("5_o1yg0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_2vy6m")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_op5fj")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_x8uum")
+}
+
+[node name="FirePoint" type="Marker2D" parent="."]
+scale = Vector2(-1, -1)
+
+[node name="healthBar" parent="." instance=ExtResource("12_0vvue")]
+offset_top = -15.0
+offset_bottom = -15.0

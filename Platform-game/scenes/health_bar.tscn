@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpi7g0k4cahac"]
+
+[ext_resource type="Script" path="res://scripts/health_bar.gd" id="1_cnxhl"]
+
+[node name="healthBar" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cnxhl")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -12.0
+offset_right = 12.0
+offset_bottom = 4.0
+color = Color(0.772549, 0.0823529, 0.0588235, 1)

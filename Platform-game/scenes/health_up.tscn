@@ -1,0 +1,58 @@
+[gd_scene load_steps=11 format=3 uid="uid://cgbubxokm1xd8"]
+
+[ext_resource type="Texture2D" uid="uid://b083mour7jwsk" path="res://Treasure Hunters/Pirate Treasure/Sprites/Red Potion/01.png" id="1_3llsb"]
+[ext_resource type="Script" path="res://scripts/health_up.gd" id="1_ce0ou"]
+[ext_resource type="Texture2D" uid="uid://cgi3mgiefug3" path="res://Treasure Hunters/Pirate Treasure/Sprites/Red Potion/02.png" id="2_jheqt"]
+[ext_resource type="Texture2D" uid="uid://ccp7ra5ic8qfr" path="res://Treasure Hunters/Pirate Treasure/Sprites/Red Potion/03.png" id="3_geai0"]
+[ext_resource type="Texture2D" uid="uid://bu7ht3t33g3ob" path="res://Treasure Hunters/Pirate Treasure/Sprites/Red Potion/04.png" id="4_1nxru"]
+[ext_resource type="Texture2D" uid="uid://cl4bfaseueap3" path="res://Treasure Hunters/Pirate Treasure/Sprites/Red Potion/05.png" id="5_84lhr"]
+[ext_resource type="Texture2D" uid="uid://c6idvlilg3onl" path="res://Treasure Hunters/Pirate Treasure/Sprites/Red Potion/06.png" id="6_gudjf"]
+[ext_resource type="Texture2D" uid="uid://bjxhtyw7c42i8" path="res://Treasure Hunters/Pirate Treasure/Sprites/Red Potion/07.png" id="7_th2h0"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8ht5g"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_3llsb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_jheqt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_geai0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_1nxru")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_84lhr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_gudjf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_th2h0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_luhjk"]
+size = Vector2(10, 17)
+
+[node name="healthUp" type="Node2D"]
+script = ExtResource("1_ce0ou")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_8ht5g")
+frame_progress = 0.369347
+
+[node name="Area2D" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_luhjk")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

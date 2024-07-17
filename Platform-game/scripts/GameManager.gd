@@ -7,6 +7,7 @@ var player: Player
 var coins = 0
 
 func respawn_player():
+	player.health = player.max_health
 	if checkPoint != null:
 		player.position = checkPoint.global_position
 

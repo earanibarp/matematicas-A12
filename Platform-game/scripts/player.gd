@@ -5,22 +5,23 @@ class_name Player
 @export var jump_velocity = -400.0
 @export var attacking = false
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+
+var max_health = 2
+var health = 0
+var can_take_damage = true
 
 func _ready():
 	GameManager.player = self
+	health = max_health
 
 func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += gravity * delta
 
-	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_velocity
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction = Input.get_axis("left", "right")
 	if direction:
 		velocity.x = direction * speed
@@ -34,8 +35,11 @@ func _physics_process(delta):
 	process_animations()
 	
 func _process(delta):
+	get_node("healthBar").update_healthBar(health, max_health)
 	if Input.is_action_just_pressed("attack"):
 		attack()
+	else:
+		attacking = false
 
 func attack():
 	attacking = true
@@ -45,9 +49,21 @@ func attack():
 	
 	for area in overlapping_areas:
 		print(area)
-		if area.is_in_group("enemies"):
-			area.get_parent().die()
+		if area.get_parent().is_in_group("enemies"):
+			area.get_parent().take_damage(1)
 		
+		
+func take_damage(damage_amount):
+	if can_take_damage:
+		invulnerable()
+		health -= damage_amount
+		if health <= 0:
+			die()
+
+func invulnerable():
+	can_take_damage = false
+	await get_tree().create_timer(1).timeout
+	can_take_damage = true
 
 func process_animations():
 	if !attacking:
@@ -55,8 +71,10 @@ func process_animations():
 			$AnimationPlayer.play("run")
 			if velocity.x < 0:
 				$Sprite2D.flip_h = true
+				$AtackingArea.scale.x = abs($AtackingArea.scale.x) * -1
 			else:
 				$Sprite2D.flip_h = false
+				$AtackingArea.scale.x = abs($AtackingArea.scale.x)
 		else:
 			$AnimationPlayer.play("idle")
 	
